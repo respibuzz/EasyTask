@@ -35,14 +35,18 @@ class TaskController {
         logger.info("Pageable implement");
         return ResponseEntity.ok(repository.findAll(page).getContent());
     }
+
     @RequestMapping(method = RequestMethod.PUT,value = "/tasks/{id}")
     ResponseEntity<?> updateTask(@PathVariable int id, @RequestBody @Valid Task taskToUpdate){
         logger.info("Put task implementation");
         if (!repository.existsById(id)){
             return ResponseEntity.notFound().build();
         }
-        taskToUpdate.setId(id);
-        repository.save(taskToUpdate);
+        repository.findById(id)
+                .ifPresent(task -> {
+                        task.updateTask(taskToUpdate);
+                    repository.save(task);
+                });
         return ResponseEntity.noContent().build();
     }
 
