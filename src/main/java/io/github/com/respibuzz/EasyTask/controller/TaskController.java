@@ -82,6 +82,5 @@ class TaskController {
         return ResponseEntity.ok(doneTasks);
     }
 
-
 }
 

@@ -2,12 +2,11 @@ package io.github.com.respibuzz.EasyTask.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
-public class Task {
+public class Task extends BaseAuditableEntity {
     public Task() {
     }
     @Id
@@ -20,17 +19,7 @@ public class Task {
    // @Column(name = "done")
     private boolean done;
     private LocalDateTime deadline;
-    private LocalDateTime createdOn;
-    private LocalDateTime updatedOn;
 
-
-
-
-
-    @PrePersist
-    protected void onCreate() {createdOn = LocalDateTime.now();}
-    @PreUpdate
-    protected void onMerge() {updatedOn = LocalDateTime.now();}
 
     public LocalDateTime getDeadline() {
         return deadline;
@@ -59,8 +48,8 @@ public class Task {
 
 
     public void updateTask(final Task source){
-        this.done = done;
-        this.description = description;
-        this.deadline = deadline;
+      done = source.done;
+      description = source.description;
+      deadline = source.deadline;
     }
 }
