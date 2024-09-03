@@ -14,4 +14,5 @@ public interface TaskRepository {
     List<Task> findByDone(@Valid boolean done);
     boolean existsById(Integer id);
     Page<Task> findAll(Pageable pageable);
+    boolean existsByDoneIsFalseAndTaskGroupId(Integer taskGroupId);
 }
